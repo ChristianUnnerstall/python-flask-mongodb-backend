@@ -6,7 +6,8 @@ WORKDIR /app
 
 RUN pip --no-cache-dir install -r requirements.txt
 
-COPY . /app
+COPY ./.env /app/.env
+COPY ./app.py /app/app.py
 
 EXPOSE 5000
 
