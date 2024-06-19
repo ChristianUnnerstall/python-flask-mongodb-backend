@@ -1,6 +1,7 @@
-## dotenv
+# SETUP
+Create a .env file with the following key/values pairs
 
-The dotenv (.env) needs to include the following values
-
+````
 application_root="/api/v1.0"
 mongodb_url="mongodb://<host>>:<port>/"
+````
