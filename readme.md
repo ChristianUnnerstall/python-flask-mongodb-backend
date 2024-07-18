@@ -12,5 +12,7 @@ Create a .env file with the following key/values pairs
 
 ````
 application_root="/api/v1.0"
-mongodb_url="mongodb://<host>>:<port>/"
+mongodb_url="mongodb://<host>:<port>/"
+db_name="<database>"
+collection_name="<collection>"
 ````
