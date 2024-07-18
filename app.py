@@ -8,15 +8,17 @@ from datetime import datetime
 
 load_dotenv()
 
-application_root = os.getenv("application_root")
-mongodb_url = os.getenv("mongodb_url")
+APPLICATION_ROOT = os.getenv("application_root")
+MONGODB_URL = os.getenv("mongodb_url")
+DB_NAME = os.getenv("db_name")
+COLLECTION_NAME = os.getenv("collection_name")
 app = Flask(__name__)
 
-client = MongoClient(mongodb_url)
-db = client['python-flask-mongodb-backend']
-collection = db['data']
+client = MongoClient(MONGODB_URL)
+db = client[DB_NAME]
+collection = db[COLLECTION_NAME]
 
-@app.route(application_root + '/', methods=["GET"])
+@app.route(APPLICATION_ROOT + '/', methods=["GET"])
 def index():
     return {
         "status": "ok",
@@ -24,7 +26,7 @@ def index():
         "version": 1.0
     }, 200
 
-@app.route(application_root + '/todos/', methods=["GET"])
+@app.route(APPLICATION_ROOT + '/data/', methods=["GET"])
 def read():
     #     
     data = collection.find({})
@@ -36,7 +38,7 @@ def read():
         "data": todosJson
     }, 200
 
-@app.route(application_root + '/todos/<id>', methods=["GET"])
+@app.route(APPLICATION_ROOT + '/data/<id>', methods=["GET"])
 def read_one_by_id(id):
     
     filter = {
@@ -51,7 +53,7 @@ def read_one_by_id(id):
         "data": todosJson
     }, 200
 
-@app.route(application_root + '/todos/<id>', methods=["PUT"])
+@app.route(APPLICATION_ROOT + '/data/<id>', methods=["PUT"])
 def update_one_by_id(id):
     
     data = request.json
@@ -80,7 +82,7 @@ def update_one_by_id(id):
         "message": "Document with ID " + id + " successfully updated."
     }, 200
 
-@app.route(application_root + '/todos/', methods=["POST"])
+@app.route(APPLICATION_ROOT + '/data/', methods=["POST"])
 def create_one():
     data = request.json
     collection.insert_one(data)
@@ -89,7 +91,7 @@ def create_one():
         "message": ""
     }, 201
 
-@app.route(application_root + '/todos/<id>', methods=["DELETE"])
+@app.route(APPLICATION_ROOT + '/data/<id>', methods=["DELETE"])
 def delete_one_by_id(id):
     filter = {
         "_id": ObjectId(id)
